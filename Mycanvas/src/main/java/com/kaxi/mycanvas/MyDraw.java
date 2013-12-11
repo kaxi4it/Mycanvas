@@ -19,11 +19,18 @@ public class MyDraw extends View{
     Float left=100.0f;//所有色块
     Float top=10.0f;//所有色块
     Float right=400.0f;//所有色块
-    Float bottom=710.0f;//所有色块
+    Float bottom=610.0f;//所有色块
     int heightX=4;//色块数
     int widthX=6;//次数
     Float height;//单色块高
     Float width;//单次数宽
+    Float mTextSize=25.0f;
+    String[] values = new String[]{"300","200","100","  0"};
+    int[] colors = new int[]{Color.parseColor("#ffa4a3"),Color.parseColor("#ffd36a"),Color.parseColor("#aee959"),Color.parseColor("#99deff")};
+//    #ffa4a3
+//    #ffd36a
+//    #aee959
+//    #99deff
 
     public MyDraw(Context context,AttributeSet attr){
         super(context,attr);
@@ -41,25 +48,21 @@ public class MyDraw extends View{
     protected void onDraw(Canvas canvas) {
         height=(bottom-top)/heightX;
         width=(right-left)/widthX;
+        RectF rect=new RectF();
 
-        //四色背景
-        paint.setColor(Color.GRAY);
-        RectF rect0 = new RectF(left, top, 430, 160);
-        canvas.drawRect(rect0,paint);
-        paint.setColor(Color.GREEN);
-        RectF rect1 = new RectF(left, top+height*1, 430, 310);
-        canvas.drawRect(rect1,paint);
-        paint.setColor(Color.RED);
-        RectF rect2 = new RectF(left,  top+height*2, 430, 460);
-        canvas.drawRect(rect2,paint);
-        paint.setColor(Color.BLUE);
-        RectF rect3 = new RectF(left,  top+height*3, 430, 610);
-        canvas.drawRect(rect3,paint);
-        paint.setColor(Color.BLACK);
-        canvas.drawLine(90.0F,610.0F,440.0F,610.0F,paint);//横
-        canvas.drawLine(90.0F,460.0F,440.0F,460.0F,paint);
-        canvas.drawLine(90.0F,310.0F,440.0F,310.0F,paint);
-        canvas.drawLine(90.0F,160.0F,440.0F,160.0F,paint);
+        for(int i=0;i<heightX;i++){
+            paint.setColor(colors[i]);
+            rect.set(left, top+height*i, right, top+height*(i+1));//l,t,r,b
+            canvas.drawRect(rect,paint);
+        }
+
+        paint.setColor(Color.WHITE);
+        paint.setTextSize(mTextSize);
+        for (int i=0;i<heightX;i++){
+            canvas.drawLine(left-10,top+height*(i+1),right+10,top+height*(i+1),paint);
+            canvas.drawText(values[i],left-50,top+height*(i+1),paint);
+        }
+
         canvas.drawLine(100.0F,0.0F,100.0F,620.0F,paint);//竖
 
 
